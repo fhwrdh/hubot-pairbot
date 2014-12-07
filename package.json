@@ -1,0 +1,34 @@
+{
+  "name": "hubot-pairbot",
+  "version": "1.0.0",
+  "description": "Simple support for pair programming",
+  "main": "index.coffee",
+  "scripts": {
+    "test": "script/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fhwrdh/hubot-pairbot.git"
+  },
+  "keywords": [
+    "hubot",
+    "hubot-scripts",
+    "pair-programming"
+  ],
+  "author": "Franklin Henderson <fhwrdh@fhwrdh.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fhwrdh/hubot-pairbot/issues"
+  },
+  "dependencies": {
+    "coffee-script": "~1.8.0",
+    "moment": "~2.8.4",
+    "underscore": "~1.7.0"
+  },
+  "devDependencies": {
+    "mocha": "~2.0.1",
+    "chai": "~1.10.0",
+    "sinon": "~1.12.1",
+    "sinon-chai": "~2.6.0"
+  }
+}
