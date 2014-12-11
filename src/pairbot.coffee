@@ -47,6 +47,7 @@ commands =
         'clear pairing'
     ].join('|')
 
+
 START_PAIRING = ///(#{commands.start})\s+(.+)///i
 STOP_PAIRING  = ///(#{commands.stop})$///i
 LIST_PAIRS    = ///(#{commands.list})$///i
@@ -101,7 +102,7 @@ listen = (robot, msg) ->
 
     data = getStorage robot
     found = _.find _.keys(data), (key) ->
-        return ///#{key}///.test msg.message.text
+        return ///\b#{key}\b///.test msg.message.text
 
     return unless found
     pairing = data[found]
@@ -123,4 +124,8 @@ module.exports = (robot) ->
 
     robot.hear /(.*)/i, (msg) ->
         listen robot, msg
+
+    testHelper =
+        testListener: listen
+    return testHelper
 
