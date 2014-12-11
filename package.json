@@ -1,10 +1,15 @@
 {
+  "//": [
+    "COMMENTS",
+    "To run tests with watch, use 'npm run-script testwatch'"
+  ],
   "name": "hubot-pairbot",
   "version": "1.0.0",
   "description": "Simple support for pair programming",
   "main": "index.coffee",
   "scripts": {
-    "test": "script/test"
+    "test": "script/test",
+    "testwatch": "script/test-watch"
   },
   "repository": {
     "type": "git",
@@ -29,6 +34,7 @@
     "mocha": "~2.0.1",
     "chai": "~1.10.0",
     "sinon": "~1.12.1",
-    "sinon-chai": "~2.6.0"
+    "sinon-chai": "~2.6.0",
+    "hubot": "~2.10.0"
   }
 }
