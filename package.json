@@ -1,29 +1,25 @@
 {
-  "//": [
-    "COMMENTS",
-    "To run tests with watch, use 'npm run-script testwatch'"
-  ],
   "name": "hubot-pairbot",
-  "version": "1.0.0",
-  "description": "Simple support for pair programming",
-  "main": "index.coffee",
-  "scripts": {
-    "test": "script/test",
-    "testwatch": "script/test-watch"
-  },
+  "description": "Simple support for pair programming in Hubot",
+  "version": "0.0.1",
+  "author": "Franklin Henderson <fhwrdh@fhwrdh.net>",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git://github.com/fhwrdh/hubot-pairbot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fhwrdh/hubot-pairbot/issues"
   },
   "keywords": [
     "hubot",
     "hubot-scripts",
     "pair-programming"
   ],
-  "author": "Franklin Henderson <fhwrdh@fhwrdh.net>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/fhwrdh/hubot-pairbot/issues"
+  "main": "index.coffee",
+  "scripts": {
+    "test": "script/test",
+    "testwatch": "script/test-watch"
   },
   "dependencies": {
     "coffee-script": "~1.8.0",
