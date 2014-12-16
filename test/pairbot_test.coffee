@@ -11,10 +11,10 @@ describe 'pairbot', ->
         require('../src/pairbot')(@robot)
 
     it 'registers a listener to list', ->
-        expect(@robot.respond).to.have.been.calledWith(/(list pairs|list pairing)$/i)
+        expect(@robot.respond).to.have.been.calledWith(/(list pairs|list pairing|list)$/i)
 
     it 'registers a listener to clear', ->
-        expect(@robot.respond).to.have.been.calledWith(/(clear pairs|clear pairing)$/i)
+        expect(@robot.respond).to.have.been.calledWith(/(clear pairs|clear pairing|clear)$/i)
 
 describe 'listening', ->
 

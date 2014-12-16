@@ -1,5 +1,5 @@
 # Description
-#   Forwards to messages to a pair.
+#   Forwards messages to a pair.
 #
 # Dependencies
 #
@@ -8,17 +8,18 @@
 #
 #
 # Commands
-#   hubot start pairing with <user>
-#   hubot stop pairing
-#   hubot clear pairs
-#   hubot list pairs
+#   pairbot start pairing with <user>
+#   pairbot stop pairing
+#   pairbot clear pairs
+#   pairbot list pairs
+#   pairbot help
 #
 # Notes
-#  - 'start pairing' will clobber any previous pairing.
-#  -
+#   - 'start pairing' will clobber any previous pairing.
+#   -
 #
 # Author:
-#   fhenderson@cj.com
+#   fhwrdh@fhwrdh.net
 #
 _         = require 'underscore'
 moment    = require 'moment'
@@ -30,6 +31,7 @@ commands =
         'pair with'
         'pairing with'
         'start pairing with'
+        'start with'
     ].join('|')
     stop: [
         'spw'
@@ -37,21 +39,25 @@ commands =
         'done pairing'
         'end pairing'
         'not pairing'
+        'stop'
+        'done'
     ].join('|')
     list: [
         'list pairs'
         'list pairing'
+        'list'
     ].join('|')
     clear: [
         'clear pairs'
         'clear pairing'
+        'clear'
     ].join('|')
-
 
 START_PAIRING = ///(#{commands.start})\s+(.+)///i
 STOP_PAIRING  = ///(#{commands.stop})$///i
 LIST_PAIRS    = ///(#{commands.list})$///i
 CLEAR_PAIRS   = ///(#{commands.clear})$///i
+HELP          = ///(\?|help)///i
 
 getStorage = (robot) ->
     return JSON.parse(robot.brain.get 'pairbot') or {}
@@ -94,26 +100,44 @@ clearPairs = (robot, msg) ->
     setStorage robot, {}
     msg.send "Ok, all pairs cleared. Hope you know what you are doing."
 
+sendHelp = (robot, msg) ->
+    msg.send "Need help? I respond to the following commands (and a few aliases):"
+    msg.send "  start pairing with <user>"
+    msg.send "  stop pairing"
+    msg.send "  list pairs"
+    msg.send "  help"
+
+extras =
+    Shell: 'testing'
+
+getExtrasFor = (user) ->
+    extra = extras[user]
+    return " (#{extra})" if extra
+
 listen = (robot, msg) ->
     return if STOP_PAIRING.test msg.message
     return if START_PAIRING.test msg.message
     return if LIST_PAIRS.test msg.message
-    return if CLEAR_PAIRS.test msg.message
+    return if CLEAR_PAIRS.test msg.messag
 
     data = getStorage robot
     found = _.find _.keys(data), (key) ->
         return ///\b#{key}\b///.test msg.message.text
-
     return unless found
+
+    extrasForFound = getExtrasFor found
     pairing = data[found]
-    msg.send "#{pairing.pair}: #{msg.message.text}"
+    msg.send "#{pairing.pair}: #{msg.message.text}#{extrasForFound}"
 
 module.exports = (robot) ->
 
-    robot.hear START_PAIRING, (msg) ->
+    robot.respond HELP, (msg) ->
+        sendHelp robot, msg
+
+    robot.respond START_PAIRING, (msg) ->
         startPair robot, msg
 
-    robot.hear STOP_PAIRING, (msg) ->
+    robot.respond STOP_PAIRING, (msg) ->
         stopPair robot, msg
 
     robot.respond LIST_PAIRS, (msg) ->
