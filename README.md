@@ -50,9 +50,9 @@ See all the current pairings known to pairbot.
 
 Removes all registrations. Use with caution.
 
-```help```
+```help ```
 
-Quick list of commands.
+Quick list of available commands.
 
 ## Sample Interaction
 
