@@ -1,7 +1,7 @@
 {
   "name": "hubot-pairbot",
   "description": "Simple support for pair programming in Hubot",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Franklin Henderson <fhwrdh@fhwrdh.net>",
   "license": "MIT",
   "repository": {
