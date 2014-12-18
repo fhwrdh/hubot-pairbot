@@ -146,10 +146,14 @@ module.exports = (robot) ->
     robot.respond CLEAR_PAIRS, (msg) ->
         clearPairs robot, msg
 
-    robot.hear /(.*)/i, (msg) ->
+    robot.respond /(.*)/, (msg) ->
+        if msg.match[1] == ''
+            sendHelp robot, msg
+
+    robot.hear /(.*)/, (msg) ->
         listen robot, msg
 
     testHelper =
-        testListener: listen
+        testListen: listen
     return testHelper
 

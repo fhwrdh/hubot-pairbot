@@ -16,6 +16,9 @@ describe 'pairbot', ->
     it 'registers a listener to clear', ->
         expect(@robot.respond).to.have.been.calledWith(/(clear pairs|clear pairing|clear)$/i)
 
+    it 'registers a listener for help', ->
+        expect(@robot.respond).to.have.been.calledWith(/(\?|help)/i)
+
 describe 'listening', ->
 
     beforeEach ->
@@ -50,7 +53,7 @@ describe 'listening', ->
         ]
         for msg in messages
             msg = buildMessage msg
-            @pairbot.testListener @robot, msg
+            @pairbot.testListen @robot, msg
             expect(msg.response).to.not.be.undefined
 
     it 'doesnt mistakenly match', ->
@@ -62,7 +65,7 @@ describe 'listening', ->
         ]
         for msg in messages
             msg = buildMessage msg
-            @pairbot.testListener @robot, msg
+            @pairbot.testListen @robot, msg
             expect(msg.response).to.be.undefined
 
 
