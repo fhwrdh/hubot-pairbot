@@ -112,7 +112,9 @@ extras =
 
 getExtrasFor = (user) ->
     extra = extras[user]
-    return " (#{extra})" if extra
+    if extra?
+        return " (#{extra})"
+    ''
 
 listen = (robot, msg) ->
     return if STOP_PAIRING.test msg.message

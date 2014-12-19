@@ -35,7 +35,7 @@ describe 'listening', ->
         @pairbot = require('../src/pairbot') (@robot)
 
     it 'registers a hear listener', ->
-        expect(@robot.hear).to.have.been.calledWith(/(.*)/i)
+        expect(@robot.hear).to.have.been.calledWith(/(.*)/)
 
     buildMessage = (text) ->
         msg =
@@ -44,6 +44,11 @@ describe 'listening', ->
             send: (response) ->
                 @response = response
         msg
+
+    it 'repeats message to pair', ->
+        msg = buildMessage 'stu: MESSAGE'
+        @pairbot.testListen @robot, msg
+        expect(msg.response).to.equal 'billy: stu: MESSAGE'
 
     it 'does correctly match', ->
         messages = [
