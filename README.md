@@ -1,5 +1,7 @@
 # Pairbot
 
+[![Build Status](https://travis-ci.org/fhwrdh/hubot-pairbot.svg?branch=master)](https://travis-ci.org/fhwrdh/hubot-pairbot)
+
 ### A simple [hubot](https://hubot.github.com) script to support pair programming.
 
 The initial use case is pretty specific:
