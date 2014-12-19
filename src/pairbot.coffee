@@ -106,7 +106,6 @@ sendHelp = (robot, msg) ->
     msg.send "  stop pairing"
     msg.send "  list pairs"
     msg.send "  help"
-    msg.send "Want to help? Bug? Feature request? https://github.com/fhwrdh/hubot-pairbot"
 
 extras =
     Shell: 'testing'
