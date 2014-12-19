@@ -50,6 +50,12 @@ describe 'listening', ->
         @pairbot.testListen @robot, msg
         expect(msg.response).to.equal 'billy: stu: MESSAGE'
 
+    it 'does not repeat message to pair when pair is already mentioned', ->
+        # billy is the pair
+        msg = buildMessage 'stu billy: MESSAGE'
+        @pairbot.testListen @robot, msg
+        expect(msg.response).to.be.undefined
+
     it 'does correctly match', ->
         messages = [
             'stu'

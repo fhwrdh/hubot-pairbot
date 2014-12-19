@@ -106,6 +106,7 @@ sendHelp = (robot, msg) ->
     msg.send "  stop pairing"
     msg.send "  list pairs"
     msg.send "  help"
+    msg.send "Want to help? Bug? Feature request? https://github.com/fhwrdh/hubot-pairbot"
 
 extras =
     Shell: 'testing'
@@ -127,8 +128,13 @@ listen = (robot, msg) ->
         return ///\b#{key}\b///.test msg.message.text
     return unless found
 
-    extrasForFound = getExtrasFor found
     pairing = data[found]
+
+    # dont repeat the message is the pair is already mentioned
+    pairMentioned = ///\b#{pairing.pair}\b///.test msg.message.text
+    return if pairMentioned
+
+    extrasForFound = getExtrasFor found
     msg.send "#{pairing.pair}: #{msg.message.text}#{extrasForFound}"
 
 module.exports = (robot) ->
