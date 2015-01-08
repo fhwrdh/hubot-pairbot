@@ -133,6 +133,10 @@ listen = (robot, msg) ->
     pairMentioned = ///\b#{pairing.pair}\b///.test msg.message.text
     return if pairMentioned
 
+    # don't repeat the message if sent from the pair
+    sender = msg.message.user.name
+    return if sender == pairing.pair
+
     extrasForFound = getExtrasFor found
     msg.send "#{pairing.pair}: #{msg.message.text}#{extrasForFound}"
 

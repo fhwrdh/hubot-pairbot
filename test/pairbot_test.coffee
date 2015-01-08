@@ -40,6 +40,8 @@ describe 'listening', ->
     buildMessage = (text) ->
         msg =
             message:
+                user:
+                    name: 'TEST'
                 text: text
             send: (response) ->
                 @response = response
@@ -56,7 +58,13 @@ describe 'listening', ->
         @pairbot.testListen @robot, msg
         expect(msg.response).to.be.undefined
 
-    it 'does correctly match', ->
+    it 'does not repeat the message to the pair if it comes from the pair', ->
+        msg = buildMessage 'stu: MESSAGE'
+        msg.message.user.name = 'billy'
+        @pairbot.testListen @robot, msg
+        expect(msg.response).to.be.undefined
+
+    it 'does correctly match names', ->
         messages = [
             'stu'
             '@stu'
@@ -67,7 +75,7 @@ describe 'listening', ->
             @pairbot.testListen @robot, msg
             expect(msg.response).to.not.be.undefined
 
-    it 'doesnt mistakenly match', ->
+    it 'doesnt mistakenly match names', ->
         messages = [
             'stunning'
             '1stu'
