@@ -32,6 +32,7 @@ commands =
         'pairing with'
         'start pairing with'
         'start with'
+        'i\'m pairing with'
     ].join('|')
     stop: [
         'spw'
