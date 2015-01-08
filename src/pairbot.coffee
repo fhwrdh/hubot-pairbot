@@ -69,6 +69,11 @@ startPair = (robot, msg) ->
     data = getStorage robot
     user = msg.message.user.name
     pair = msg.match[2]
+
+    if user == pair
+        msg.reply "Pairing with yourself is considered harmful :)"
+        return
+
     data[user] = { pair: pair, ts: moment.utc() }
     setStorage robot, data
     msg.reply "Got it, you are now pairing with #{pair}"
@@ -178,6 +183,7 @@ module.exports = (robot) ->
 
     testHelper =
         testListen: listen
+        testStartPair: startPair
         testStopPair: stopPair
     return testHelper
 

@@ -35,8 +35,6 @@ describe 'listening', ->
 
         @pairbot = require('../src/pairbot') (@robot)
 
-
-
     it 'registers a hear listener', ->
         expect(@robot.hear).to.have.been.calledWith(/(.*)/)
 
@@ -49,6 +47,13 @@ describe 'listening', ->
             reply: (reply) -> @reply = reply
             send: (response) -> @response = response
         msg
+
+    it 'should not let you pair with yourself', ->
+        msg = buildMessage 'MESSAGE'
+        # make the sender match the other pair
+        msg.match = ['', '', msg.message.user.name]
+        @pairbot.testStartPair @robot, msg
+        expect(msg.reply).to.equal 'Pairing with yourself is considered harmful :)'
 
     it 'should let the pair end the pairing session', ->
         msg = buildMessage 'MESSAGE'
