@@ -26,6 +26,7 @@ describe 'listening', ->
             respond: sinon.spy()
             hear:    sinon.spy()
             brain:
+                set: sinon.spy()
                 get: () ->
                     data =
                         stu:
@@ -33,6 +34,8 @@ describe 'listening', ->
                     return JSON.stringify data
 
         @pairbot = require('../src/pairbot') (@robot)
+
+
 
     it 'registers a hear listener', ->
         expect(@robot.hear).to.have.been.calledWith(/(.*)/)
@@ -43,9 +46,15 @@ describe 'listening', ->
                 user:
                     name: 'TEST'
                 text: text
-            send: (response) ->
-                @response = response
+            reply: (reply) -> @reply = reply
+            send: (response) -> @response = response
         msg
+
+    it 'should let the pair end the pairing session', ->
+        msg = buildMessage 'MESSAGE'
+        msg.message.user.name = 'billy'
+        @pairbot.testStopPair @robot, msg
+        expect(msg.reply).to.equal 'Got it, you are done pairing with stu'
 
     it 'repeats message to pair', ->
         msg = buildMessage 'stu: MESSAGE'
@@ -63,6 +72,8 @@ describe 'listening', ->
         msg.message.user.name = 'billy'
         @pairbot.testListen @robot, msg
         expect(msg.response).to.be.undefined
+
+
 
     it 'does correctly match names', ->
         messages = [

@@ -16,11 +16,10 @@
 #
 # Notes
 #   - 'start pairing' will clobber any previous pairing.
-#   -
 #
 # Author:
 #   fhwrdh@fhwrdh.net
-#
+
 _         = require 'underscore'
 moment    = require 'moment'
 stringify = JSON.stringify
@@ -76,14 +75,26 @@ startPair = (robot, msg) ->
 
 stopPair = (robot, msg) ->
     data = getStorage robot
-    user = msg.message.user.name
-    if not data[user]?
+    sender = msg.message.user.name
+
+    # this could come from either side of the pairing
+    if data[sender]?
+        foundPair = data[sender]
+        otherOne = sender
+    else
+        # iterate through all pairs, looking for the sender as the pair
+        foundPair = _.find _.pairs(data), (pair) ->
+            return pair[1].pair == sender
+        if foundPair?
+            otherOne = foundPair[0]
+
+    if not foundPair?
         msg.reply "Hmmm, didn't have you in the list"
     else
-        pairing = data[user]
-        delete data[user]
+        principal = foundPair[0]
+        delete data[principal]
         setStorage robot, data
-        msg.reply "Got it, you are done pairing with #{pairing.pair}"
+        msg.reply "Got it, you are done pairing with #{otherOne}"
 
 listPairs = (robot, msg) ->
     data = getStorage robot
@@ -167,5 +178,6 @@ module.exports = (robot) ->
 
     testHelper =
         testListen: listen
+        testStopPair: stopPair
     return testHelper
 
