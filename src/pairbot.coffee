@@ -91,24 +91,27 @@ stopPair = (robot, msg) ->
     data = getStorage robot
     sender = msg.message.user.name
 
-    # this could come from either side of the pairing
+    # the sender could be on either side of the pairing
+    # did it come from the principal?
     if data[sender]?
         foundPair = data[sender]
-        otherOne = sender
+        principal = sender
+        other = foundPair["pair"]
     else
-        # iterate through all pairs, looking for the sender as the pair
+        # iterate through all pairs, looking for the sender as the other
         foundPair = _.find _.pairs(data), (pair) ->
             return pair[1].pair == sender
         if foundPair?
-            otherOne = foundPair[0]
+            principal = foundPair[0]
+            other = sender
 
     if not foundPair?
         msg.reply "Hmmm, didn't have you in the list"
     else
-        principal = foundPair[0]
         delete data[principal]
         setStorage robot, data
-        msg.reply "Got it, you are done pairing with #{otherOne}"
+        notSender = if principal == sender then other else principal
+        msg.reply "Got it, you are done pairing with #{notSender}"
 
 listPairs = (robot, msg) ->
     data = getStorage robot

@@ -8,6 +8,7 @@ describe 'pairbot', ->
         @robot =
             respond: sinon.spy()
             hear:    sinon.spy()
+            error:   sinon.spy()
         require('../src/pairbot')(@robot)
 
     it 'registers a listener to list', ->
@@ -25,6 +26,7 @@ describe 'listening', ->
         @robot =
             respond: sinon.spy()
             hear:    sinon.spy()
+            error:   sinon.spy()
             brain:
                 set: sinon.spy()
                 get: () ->
@@ -64,7 +66,7 @@ describe 'listening', ->
     it 'repeats message to pair', ->
         msg = buildMessage 'stu: MESSAGE'
         @pairbot.testListen @robot, msg
-        expect(msg.response).to.equal 'billy: stu: MESSAGE'
+        expect(msg.response).to.equal 'billy: ^^^^^ '
 
     it 'does not repeat message to pair when pair is already mentioned', ->
         # billy is the pair
