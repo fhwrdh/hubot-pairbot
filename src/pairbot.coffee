@@ -142,7 +142,6 @@ handleError = (robot, error, msg) ->
     if msg?
         msg.reply "Ouch. that made me uncomfortable and I don't know why. Maybe a bug? You might file something to #{metadata.bugs.url}"
 
-
 extras =
     Shell: 'testing'
 
@@ -174,7 +173,7 @@ listen = (robot, msg) ->
     return if sender == pairing.pair
 
     extrasForFound = getExtrasFor found
-    msg.send "#{pairing.pair}: #{msg.message.text}#{extrasForFound}"
+    msg.send "#{pairing.pair}: ^^^^^ #{extrasForFound}"
 
 module.exports = (robot) ->
 
