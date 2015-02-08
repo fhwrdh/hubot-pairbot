@@ -23,6 +23,7 @@
 _         = require 'underscore'
 moment    = require 'moment'
 stringify = JSON.stringify
+metadata  = require('../package.json')
 
 commands =
     start: [
@@ -52,11 +53,19 @@ commands =
         'clear pairing'
         'clear'
     ].join('|')
+    about: [
+        'about'
+        'version'
+        'tell .* about yourself'
+        'who are you(\\?*)'
+        'what are you(\\?*)'
+    ].join('|')
 
 START_PAIRING = ///(#{commands.start})\s+(.+)///i
 STOP_PAIRING  = ///(#{commands.stop})$///i
 LIST_PAIRS    = ///(#{commands.list})$///i
 CLEAR_PAIRS   = ///(#{commands.clear})$///i
+ABOUT         = ///(#{commands.about})$///i
 HELP          = ///(\?|help)///i
 
 getStorage = (robot) ->
@@ -115,7 +124,10 @@ listPairs = (robot, msg) ->
 clearPairs = (robot, msg) ->
     data = getStorage robot
     setStorage robot, {}
-    msg.send "Ok, all pairs cleared. Hope you know what you are doing."
+    msg.send "Ok, hope you know what you are doing. All pairs cleared."
+
+sendAbout = (robot, msg) ->
+    msg.send "#{robot.name} v#{metadata.version}"
 
 sendHelp = (robot, msg) ->
     msg.send "Need help? I respond to the following commands (and a few aliases):"
@@ -123,6 +135,13 @@ sendHelp = (robot, msg) ->
     msg.send "  stop pairing"
     msg.send "  list pairs"
     msg.send "  help"
+    msg.send "  about"
+
+handleError = (robot, error, msg) ->
+    robot.logger.error "Error: #{error} / #{msg}"
+    if msg?
+        msg.reply "Ouch. that made me uncomfortable and I don't know why. Maybe a bug? You might file something to #{metadata.bugs.url}"
+
 
 extras =
     Shell: 'testing'
@@ -162,6 +181,9 @@ module.exports = (robot) ->
     robot.respond HELP, (msg) ->
         sendHelp robot, msg
 
+    robot.respond ABOUT, (msg) ->
+        sendAbout robot, msg
+
     robot.respond START_PAIRING, (msg) ->
         startPair robot, msg
 
@@ -180,6 +202,9 @@ module.exports = (robot) ->
 
     robot.hear /(.*)/, (msg) ->
         listen robot, msg
+
+    robot.error (error, msg) ->
+        handleError robot, error, msg
 
     testHelper =
         testListen: listen
