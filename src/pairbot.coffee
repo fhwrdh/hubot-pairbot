@@ -32,6 +32,7 @@ commands =
         'pairing with'
         'start pairing with'
         'start with'
+        'start'
         'i\'m pairing with'
     ].join('|')
     stop: [
@@ -158,7 +159,7 @@ listen = (robot, msg) ->
     return if STOP_PAIRING.test msg.message
     return if START_PAIRING.test msg.message
     return if LIST_PAIRS.test msg.message
-    return if CLEAR_PAIRS.test msg.messag
+    return if CLEAR_PAIRS.test msg.message
 
     data = getStorage robot
     found = _.find _.keys(data), (key) ->
