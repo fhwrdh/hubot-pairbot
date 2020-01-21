@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "coffee-script": "~1.8.0",
-    "moment": "~2.8.4",
+    "moment": "~2.24.0",
     "underscore": "~1.7.0"
   },
   "devDependencies": {
